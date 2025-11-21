@@ -1,4 +1,6 @@
+// App.js
 
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,20 +12,13 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  StatusBar,
 } from 'react-native';
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import React, { useEffect, useState } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import uuid from 'react-native-uuid';
 
 const STORAGE_KEY = '@petjio_pets_v1';
-
 
 function PetListScreen({ navigation }) {
   const [pets, setPets] = useState([]);
@@ -78,22 +73,18 @@ function PetListScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.headerRow}>
         <Text style={styles.header}>PetJio — My Pets</Text>
+        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddPet')}>
+          <Text style={styles.addButtonText}>+ Add Pet</Text>
+        </TouchableOpacity>
       </View>
 
       <FlatList
-        contentContainerStyle={pets.length === 0 ? { flex: 1 } : undefined}
+        contentContainerStyle={pets.length === 0 && { flex: 1 }}
         data={pets}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={renderEmpty}
       />
-
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => navigation.navigate('AddPet')}
-      >
-        <Text style={styles.fabText}>+</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -268,142 +259,110 @@ function PetDetailsScreen({ route, navigation }) {
   );
 }
 
-const Stack = createNativeStackNavigator();
+//const Stack = createNativeStackNavigator();
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={PetListScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="AddPet" component={AddPetScreen} options={{ title: 'Add Pet' }} />
-        <Stack.Screen name="Details" component={PetDetailsScreen} options={{ title: 'Pet Details' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator>
+//         <Stack.Screen name="Home" component={PetListScreen} options={{ headerShown: false }} />
+//         <Stack.Screen name="AddPet" component={AddPetScreen} options={{ title: 'Add Pet' }} />
+//         <Stack.Screen name="Details" component={PetDetailsScreen} options={{ title: 'Pet Details' }} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// }
 
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
+//     backgroundColor: '#f9fafb',
+//     padding: 16,
 //   },
+//   containerCentered: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     padding: 16,
+//     backgroundColor: '#f9fafb',
+//   },
+//   header: {
+//     fontSize: 22,
+//     fontWeight: '700',
+//   },
+//   headerRow: {
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//     alignItems: 'center',
+//     marginBottom: 12,
+//   },
+//   addButton: {
+//     backgroundColor: '#0f172a',
+//     paddingVertical: 8,
+//     paddingHorizontal: 12,
+//     borderRadius: 8,
+//   },
+//   addButtonText: {
+//     color: '#fff',
+//     fontWeight: '600',
+//   },
+//   card: {
+//     backgroundColor: '#fff',
+//     padding: 14,
+//     borderRadius: 10,
+//     marginBottom: 10,
+//     shadowColor: '#000',
+//     shadowOpacity: 0.04,
+//     shadowRadius: 6,
+//     elevation: 2,
+//   },
+//   petName: { fontSize: 18, fontWeight: '600' },
+//   petType: { fontSize: 13, color: '#475569', marginTop: 4 },
+//   favoriteBadge: { color: '#b45309', fontWeight: '700' },
+//   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+//   emptyText: { color: '#64748b', fontSize: 16, textAlign: 'center' },
+//   form: { marginTop: 8 },
+//   label: { fontSize: 13, color: '#334155', marginBottom: 6 },
+//   input: {
+//     backgroundColor: '#fff',
+//     paddingHorizontal: 12,
+//     paddingVertical: 10,
+//     borderRadius: 8,
+//     borderWidth: 1,
+//     borderColor: '#e2e8f0',
+//   },
+//   pickerContainer: {
+//     backgroundColor: '#fff',
+//     borderRadius: 8,
+//     borderWidth: 1,
+//     borderColor: '#e2e8f0',
+//   },
+//   saveButton: {
+//     marginTop: 20,
+//     backgroundColor: '#0f172a',
+//     paddingVertical: 12,
+//     borderRadius: 10,
+//     alignItems: 'center',
+//   },
+//   saveButtonText: { color: '#fff', fontWeight: '700' },
+//   detailsCard: {
+//     backgroundColor: '#fff',
+//     padding: 18,
+//     borderRadius: 12,
+//     shadowColor: '#000',
+//     shadowOpacity: 0.04,
+//     shadowRadius: 6,
+//     elevation: 2,
+//   },
+//   detailLabel: { marginTop: 10, color: '#64748b', fontSize: 12 },
+//   detailValue: { fontSize: 16, fontWeight: '600' },
+//   favoriteToggle: {
+//     marginTop: 18,
+//     paddingVertical: 12,
+//     borderRadius: 10,
+//     borderWidth: 1,
+//     borderColor: '#e2e8f0',
+//     alignItems: 'center',
+//   },
+//   favoriteToggleText: { fontSize: 16, fontWeight: '700' },
 // });
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f9fafb',
-    padding: 16,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight + 16 : 16,
-  },
-  containerCentered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#f9fafb',
-  },
-  header: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  addButton: {
-    backgroundColor: '#0f172a',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-  },
-  addButtonText: {
-    color: '#fff',
-    fontWeight: '600',
-  },
-  card: {
-    backgroundColor: '#fff',
-    padding: 14,
-    borderRadius: 10,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
-  },
-  petName: { fontSize: 18, fontWeight: '600' },
-  petType: { fontSize: 13, color: '#475569', marginTop: 4 },
-  favoriteBadge: { color: '#b45309', fontWeight: '700' },
-  emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  emptyText: { color: '#64748b', fontSize: 16, textAlign: 'center' },
-  form: { marginTop: 8 },
-  label: { fontSize: 13, color: '#334155', marginBottom: 6 },
-  input: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-  },
-  pickerContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-  },
-  saveButton: {
-    marginTop: 20,
-    backgroundColor: '#0f172a',
-    paddingVertical: 12,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  saveButtonText: { color: '#fff', fontWeight: '700' },
-  detailsCard: {
-    backgroundColor: '#fff',
-    padding: 18,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
-  },
-  detailLabel: { marginTop: 10, color: '#64748b', fontSize: 12 },
-  detailValue: { fontSize: 16, fontWeight: '600' },
-  favoriteToggle: {
-    marginTop: 18,
-    paddingVertical: 12,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-    alignItems: 'center',
-  },
-  favoriteToggleText: { fontSize: 16, fontWeight: '700' },
-  fab: {
-    position: 'absolute',
-    bottom: 24,
-    right: 24,
-    backgroundColor: '#0f172a',
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 4,
-  },
-  fabText: {
-    color: '#fff',
-    fontSize: 32,
-    marginTop: -2, // visual correction
-  },
-});
-
