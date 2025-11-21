@@ -74,7 +74,8 @@ npx expo start
 
 ------------------------------------------------------------------------
 
-## 🖼️ Screenshots (Placeholders)
+## 🖼️ Screenshots 
+![Screen Screenshot](ss/ss1.jpeg) ![Screen Screenshot](ss/ss2.jpeg) ![Screen Screenshot](ss/ss3.jpeg)
 
 ### **Pet List Screen**
 
